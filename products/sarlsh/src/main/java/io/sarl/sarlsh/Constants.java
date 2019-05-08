@@ -31,13 +31,9 @@ package io.sarl.sarlsh;
  */
 public final class Constants {
 
-	/** Return code when failure.
-	 */
-	public static final int ERROR_CODE = 255;
-
 	/** Default prompt.
 	 */
-	public static final String PROMPT = "sarl> "; //$NON-NLS-1$
+	public static final String PROMPT = "> "; //$NON-NLS-1$
 
 	/** Default name of the sarlsh program.
 	 */

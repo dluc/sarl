@@ -19,7 +19,7 @@
  * limitations under the License.
  */
 
-package io.sarl.sarlsh.configs.subconfigs;
+package io.sarl.lang.sarlc.configs.subconfigs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
 import org.eclipse.xtext.diagnostics.Severity;
 
-import io.sarl.sarlsh.configs.SarlConfig;
+import io.sarl.lang.sarlc.configs.SarlcConfig;
 
 /**
  * Configuration for the validator.
@@ -37,7 +37,7 @@ import io.sarl.sarlsh.configs.SarlConfig;
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.10
+ * @since 0.8
  */
 @BQConfig("Configuration of the SARL validator")
 public class ValidatorConfig {
@@ -45,7 +45,7 @@ public class ValidatorConfig {
 	/**
 	 * Prefix for the configuration entries of the path modules.
 	 */
-	public static final String PREFIX = SarlConfig.PREFIX + ".validator"; //$NON-NLS-1$
+	public static final String PREFIX = SarlcConfig.PREFIX + ".validator"; //$NON-NLS-1$
 
 	/**
 	 * Name of the property that indicates if warnings are ignored.

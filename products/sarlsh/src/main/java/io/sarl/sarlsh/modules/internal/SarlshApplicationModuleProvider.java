@@ -25,31 +25,29 @@ import com.google.inject.Module;
 import io.bootique.BQModule;
 import io.bootique.BQModuleProvider;
 
-import io.sarl.lang.SARLRuntimeModule;
-
-/** Provider of the module for the SARL compiler runtime.
+/** Provider of the module for the sarlsh application information.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @since 0.8
+ * @since 0.10
  */
-public class SARLRuntimeModuleProvider implements BQModuleProvider {
+public class SarlshApplicationModuleProvider implements BQModuleProvider {
 
 	@Override
 	public Module module() {
-		return new SARLRuntimeModule();
+		return new SarlshApplicationModule();
 	}
 
 	@Override
-    public BQModule.Builder moduleBuilder() {
-        return BQModule
-                .builder(module())
-                .overrides(overrides())
-                .providerName(name())
-                .configs(configs())
-                .description(Messages.SarlRuntimeModuleProvider_0);
-    }
+	public BQModule.Builder moduleBuilder() {
+		return BQModule
+				.builder(module())
+				.overrides(overrides())
+				.providerName(name())
+				.configs(configs())
+				.description(Messages.SarlshApplicationModuleProvider_0);
+	}
 
 }

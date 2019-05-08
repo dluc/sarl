@@ -34,10 +34,11 @@ import org.slf4j.LoggerFactory;
 import io.sarl.lang.compiler.batch.SarlOnTheFlyCompiler;
 import io.sarl.lang.interpreter.SarlInterpreter;
 import io.sarl.lang.jvmmodel.SarlJvmModelAssociations;
+import io.sarl.lang.sarlc.configs.SarlcConfig;
 import io.sarl.sarlsh.Constants;
 import io.sarl.sarlsh.api.AwareEvaluationContext;
 import io.sarl.sarlsh.commands.ShellCommand;
-import io.sarl.sarlsh.configs.SarlConfig;
+import io.sarl.sarlsh.configs.SarlshConfig;
 
 /** Module for the shell command.
  *
@@ -61,7 +62,8 @@ public class ShellCommandModule extends AbstractModule {
 	 * @param interpreter the interpreter provider.
 	 * @param associations the provider of association accessors.
 	 * @param context evaluation context provider.
-	 * @param config the configuration provider.
+	 * @param iconfig the configuration provider for the shell.
+	 * @param cconfig the configuration provider for the compiler.
 	 * @return the command.
 	 */
 	@SuppressWarnings("static-method")
@@ -73,9 +75,10 @@ public class ShellCommandModule extends AbstractModule {
 			Provider<SarlInterpreter> interpreter,
 			Provider<SarlJvmModelAssociations> associations,
 			Provider<AwareEvaluationContext> context,
-			Provider<SarlConfig> config) {
+			Provider<SarlshConfig> iconfig,
+			Provider<SarlcConfig> cconfig) {
 		final Logger logger = LoggerFactory.getLogger(Constants.PROGRAM_NAME);
-		return new ShellCommand(lineReader, compiler, interpreter, associations, context, config, logger);
+		return new ShellCommand(lineReader, compiler, interpreter, associations, context, iconfig, cconfig, logger);
 	}
 
 }

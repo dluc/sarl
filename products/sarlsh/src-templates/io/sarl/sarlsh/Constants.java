@@ -19,11 +19,9 @@
  * limitations under the License.
  */
 
-package io.sarl.sarlsh.modules.configs;
+package io.sarl.sarlsh;
 
-import com.google.inject.AbstractModule;
-
-/** Module for creating and configuring the sarlsh interpreter's configuration.
+/** Constants for sarlsh.
  *
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -31,10 +29,21 @@ import com.google.inject.AbstractModule;
  * @mavenartifactid $ArtifactId$
  * @since 0.10
  */
-public class InterpreterConfigModule extends AbstractModule {
+public final class Constants {
 
-	@Override
-	protected void configure() {
+	/** Default prompt.
+	 */
+	public static final String PROMPT = "> "; //$NON-NLS-1$
+
+	/** Default name of the sarlsh program.
+	 */
+	public static final String PROGRAM_NAME = "@sarlshtoolname@"; //$NON-NLS-1$
+
+	/** Index of the first variable that will contain the results of the interpreted expressions.
+	 */
+	public static final int FIRST_INTERPRETED_VALUE_INDEX = 1;
+
+	private Constants() {
 		//
 	}
 

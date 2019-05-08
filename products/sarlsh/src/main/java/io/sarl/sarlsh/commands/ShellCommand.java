@@ -55,12 +55,14 @@ import io.sarl.lang.jvmmodel.SarlJvmModelAssociations;
 import io.sarl.lang.sarl.SarlAction;
 import io.sarl.lang.sarl.SarlClass;
 import io.sarl.lang.sarl.SarlScript;
+import io.sarl.lang.sarlc.configs.SarlcConfig;
+import io.sarl.lang.sarlc.configs.subconfigs.ValidatorConfig;
+import io.sarl.maven.bootiqueapp.BootiqueMain;
 import io.sarl.sarlsh.Constants;
 import io.sarl.sarlsh.api.AwareEvaluationContext;
 import io.sarl.sarlsh.api.ShellAPI;
 import io.sarl.sarlsh.api.ShellExitException;
-import io.sarl.sarlsh.configs.SarlConfig;
-import io.sarl.sarlsh.configs.subconfigs.ValidatorConfig;
+import io.sarl.sarlsh.configs.SarlshConfig;
 
 /**
  * Command for running the SARL shell.
@@ -85,7 +87,9 @@ public class ShellCommand extends CommandWithMetadata {
 
 	private final Provider<AwareEvaluationContext> context;
 
-	private final Provider<SarlConfig> config;
+	private final Provider<SarlshConfig> shellConfig;
+
+	private final Provider<SarlcConfig> compilerConfig;
 
 	private final Logger logger;
 
@@ -97,7 +101,8 @@ public class ShellCommand extends CommandWithMetadata {
 	 * @param interpreter the provider of SARL interpreters.
 	 * @param associations the associator.
 	 * @param context the provider of evaluation contexts.
-	 * @param config the provider of configuration.
+	 * @param iconfig the provider of configuration for the shell.
+	 * @param cconfig the provider of configuration for the compiler.
 	 * @param logger the logger to be used for errors and warnings.
 	 */
 	public ShellCommand(Provider<LineReader> lineReader,
@@ -105,7 +110,8 @@ public class ShellCommand extends CommandWithMetadata {
 			Provider<SarlInterpreter> interpreter,
 			Provider<SarlJvmModelAssociations> associations,
 			Provider<AwareEvaluationContext> context,
-			Provider<SarlConfig> config,
+			Provider<SarlshConfig> iconfig,
+			Provider<SarlcConfig> cconfig,
 			Logger logger) {
 		super(CommandMetadata
 				.builder(ShellCommand.class)
@@ -115,14 +121,15 @@ public class ShellCommand extends CommandWithMetadata {
 		assert interpreter != null;
 		assert associations != null;
 		assert context != null;
-		assert config != null;
+		assert iconfig != null;
 		assert logger != null;
 		this.lineReader = lineReader;
 		this.compiler = compiler;
 		this.interpreter = interpreter;
 		this.associations = associations;
 		this.context = context;
-		this.config = config;
+		this.shellConfig = iconfig;
+		this.compilerConfig = cconfig;
 		this.logger = logger;
 	}
 
@@ -136,7 +143,8 @@ public class ShellCommand extends CommandWithMetadata {
 			final SarlInterpreter machine = this.interpreter.get();
 			final SarlJvmModelAssociations assoc = this.associations.get();
 			final AwareEvaluationContext context = this.context.get();
-			final SarlConfig config = this.config.get();
+			final SarlshConfig iconfig = this.shellConfig.get();
+			final SarlcConfig cconfig = this.compilerConfig.get();
 			int interpretedResultNumber = Constants.FIRST_INTERPRETED_VALUE_INDEX;
 			final List<String> expressionTypes = new LinkedList<>();
 			while (true) {
@@ -164,7 +172,7 @@ public class ShellCommand extends CommandWithMetadata {
 					if (issues != null) {
 						for (final Issue issue : issues) {
 							if (!isIgnorableIssue(issue, context)) {
-								error = printIssue(config, issue) || error;
+								error = printIssue(iconfig, cconfig, issue) || error;
 							}
 						}
 					}
@@ -200,7 +208,7 @@ public class ShellCommand extends CommandWithMetadata {
 				}
 			}
 		} catch (Throwable exception) {
-			return CommandOutcome.failed(Constants.ERROR_CODE,
+			return CommandOutcome.failed(BootiqueMain.ERROR_CODE,
 					exception.getLocalizedMessage(), Throwables.getRootCause(exception));
 		}
 	}
@@ -285,16 +293,17 @@ public class ShellCommand extends CommandWithMetadata {
 
 	/** Print an issue according to the given configuration.
 	 *
-	 * @param config the current configuration.
+	 * @param iconfig the current configuration of the shell.
+	 * @param cconfig the current configuration of the SARL compiler.
 	 * @param issue the error to output.
 	 * @return {@code true} if the issue is an error.
 	 */
-	protected boolean printIssue(SarlConfig config, Issue issue) {
+	protected boolean printIssue(SarlshConfig iconfig, SarlcConfig cconfig, Issue issue) {
 		if (issue.isSyntaxError()) {
 			this.logger.error(formatMessage(issue));
 			return true;
 		}
-		final ValidatorConfig validatorConfig = config.getValidator();
+		final ValidatorConfig validatorConfig = cconfig.getValidator();
 		Severity severity = validatorConfig.getWarningLevels().get(issue.getCode());
 		if (severity == null || issue.getSeverity().compareTo(severity) > 0) {
 			severity = issue.getSeverity();

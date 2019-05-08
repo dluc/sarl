@@ -25,6 +25,9 @@ import java.util.List;
 
 import io.bootique.help.HelpOption;
 
+import io.sarl.maven.bootiqueapp.BootiqueMain;
+import io.sarl.sarlsh.modules.internal.SarlshApplicationModuleProvider;
+
 /** This class implements an interactive shell for SARL.
  *
  * @author $Author: sgalland$
@@ -41,12 +44,12 @@ public final class SarlShell {
 		//
 	}
 
-	/** Main program of the batch compiler.
+	/** Main program of the API documentation generator.
 	 *
 	 * @param args the command line arguments.
 	 */
 	public static void main(String[] args) {
-		final int retCode = createMainObject().runShell(args);
+		final int retCode = createMainObject().runCommand(args);
 		System.exit(retCode);
 	}
 
@@ -54,7 +57,7 @@ public final class SarlShell {
 	 *
 	 * @return the default name of the program.
 	 */
-	public static String getDefaultCompilerProgramName() {
+	public static String getDefaultProgramName() {
 		return Constants.PROGRAM_NAME;
 	}
 
@@ -62,8 +65,8 @@ public final class SarlShell {
 	 *
 	 * @return the main launcher.
 	 */
-	protected static BootiqueSarlShell createMainObject() {
-		return new BootiqueSarlShell();
+	protected static BootiqueMain createMainObject() {
+		return new BootiqueMain(new SarlshApplicationModuleProvider());
 	}
 
 	/** Replies the options of the program.

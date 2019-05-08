@@ -34,12 +34,7 @@ import org.eclipse.osgi.util.NLS;
 @SuppressWarnings("all")
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = Messages.class.getPackage().getName() + ".messages"; //$NON-NLS-1$
-	public static String InterpreterConfigModuleProvider_0;
-	public static String SarlConfigModuleProvider_0;
-	public static String ValidatorConfigModule_0;
-	public static String ValidatorConfigModule_1;
-	public static String ValidatorConfigModule_2;
-	public static String ValidatorConfigModuleProvider_0;
+	public static String SarlshConfigModuleProvider_0;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

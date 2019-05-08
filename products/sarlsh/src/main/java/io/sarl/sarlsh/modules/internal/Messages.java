@@ -36,7 +36,10 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = Messages.class.getPackage().getName() + ".messages"; //$NON-NLS-1$
 	public static String SarlCliModuleProvider_0;
 	public static String SarlInterpreterModuleProvider_0;
-	public static String SarlRuntimeModuleProvider_0;
+	public static String SarlshApplicationModule_0;
+	public static String SarlshApplicationModule_1;
+	public static String SarlshApplicationModule_2;
+	public static String SarlshApplicationModuleProvider_0;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

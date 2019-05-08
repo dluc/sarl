@@ -122,15 +122,11 @@ import io.sarl.lang.validation.IConfigurableIssueSeveritiesProvider;
  *
  * <p>This compiler is inspired by the Xtend batch compiler.
  *
- * <p>This batch compiler is the standard SARL compiler. For a compiler that may be used in
- * an shell, please see {@link SarlOnTheFlyCompiler}.
- *
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5
- * @see SarlOnTheFlyCompiler
  */
 @SuppressWarnings({"checkstyle:classfanoutcomplexity", "checkstyle:methodcount", "checkstyle:classdataabstractioncoupling"})
 public class SarlBatchCompiler {
